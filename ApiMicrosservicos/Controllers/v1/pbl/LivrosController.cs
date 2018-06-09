@@ -3,6 +3,8 @@ using Livraria.Api.ObjectModel;
 using Livraria.Api.Repository.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,9 +37,17 @@ namespace Livraria.Api.Controllers.v1.pbl
 
         [Route("{id}/comentario")]
         [HttpPost]
-        public async Task<IActionResult> PostComentario(int id)
+        public async Task<IActionResult> PostComentario(Guid id, [FromBody]JObject json)
         {
-            return await Task.Run(() => Ok($"comentário recebido - id livro {id.ToString()}"));
+            var livro = await _livrariaRespository.GetLivrosPorIdAsync(id);
+
+            if (livro == null)
+                return BadRequest("Livro não encontrado");
+
+            var comentario = JsonConvert.DeserializeObject<Comentario>(json.ToString());
+            comentario.IdLivro = id;
+
+            return await Task.Run(() => Ok($"comentário recebido {comentario.Texto} - id livro {id.ToString()}"));
         }
 
 
