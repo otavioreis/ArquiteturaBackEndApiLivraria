@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Livraria.Api.Extensions;
 using Livraria.Api.ObjectModel;
+using Livraria.Api.ObjectModel.Swagger.Examples;
 using Livraria.Api.ObjectModel.ValueObjects;
 using Livraria.Api.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Examples;
 
 namespace Livraria.Api.Controllers.v1.pbl
 {
@@ -22,6 +24,12 @@ namespace Livraria.Api.Controllers.v1.pbl
             _pedidoRepository = pedidoRepository;
         }
 
+        /// <summary>
+        /// Cria um novo pedido de acordo com os itens de um carrinho de uma sessão
+        /// </summary>
+        /// <param name="sessionId">String a sessionId</param>
+        /// <response code="400">Bad Request</response>
+        [SwaggerResponseExample(200, typeof(PedidoExample))]
         [HttpPost("{sessionId}")]
         public async Task<IActionResult> CriarPedido(string sessionId)
         {
@@ -57,6 +65,12 @@ namespace Livraria.Api.Controllers.v1.pbl
             return BadRequest("Erro ao criar novo pedido");
         }
 
+        /// <summary>
+        /// Retorna os dados de um pedido de acordo com o seu id
+        /// </summary>
+        /// <param name="idPedido">Guid do id do Pedido</param>
+        /// <response code="400">Bad Request</response>
+        [SwaggerResponseExample(200, typeof(PedidoExample))]
         [Route("{idPedido}")]
         [HttpGet]
         public async Task<IActionResult> GetDadosPedido(Guid idPedido)

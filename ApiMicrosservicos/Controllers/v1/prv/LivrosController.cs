@@ -1,8 +1,11 @@
 ﻿using Livraria.Api.ObjectModel;
+using Livraria.Api.ObjectModel.Swagger.Examples;
 using Livraria.Api.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Swashbuckle.AspNetCore.Examples;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Livraria.Api.Controllers.v1.prv
@@ -16,13 +19,19 @@ namespace Livraria.Api.Controllers.v1.prv
         {
             _livrariaRespository = livrariaRepository;
         }
-        
+
+        /// <summary>
+        /// Insere mais um livro na livraria
+        /// </summary>
+        /// <param name="livroLivraria">Json que deverá ser informado no corpo da requisição</param>
+        /// <response code="400">Bad Request</response>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] JObject json)
+        [SwaggerRequestExample(typeof(LivroLivraria), typeof(LivroLivrariaExample))]
+        [SwaggerResponseExample(200, typeof(ListaLivroLivrariaExample))]
+        public async Task<IActionResult> Post([FromBody] LivroLivraria livroLivraria)
         {
-            if(json != null)
+            if(livroLivraria != null)
             {
-                var livroLivraria = JsonConvert.DeserializeObject<LivroLivraria>(json.ToString());
                 var livrosLivraria = await _livrariaRespository.InsertLivroAsync(livroLivraria);
 
                 return Ok(livrosLivraria);
