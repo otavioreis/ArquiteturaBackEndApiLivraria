@@ -4,6 +4,24 @@ Projeto criado como resulução do exercício 02 da aula 02 da disciplina Arquit
 Este projeto atualmente está utilizando tudo em memória e session para armazenar as informações, uma vez que é apenas um projeto de teste.
 
 O projeto foi desenvolvido utilizando c# juntamente com ASP.NET Core 2.0
+
+## Informações adicionais do projeto
+
+**URL configurada para o projeto**<br />
+http://localhost:56223
+
+**URL da documentação utilizando o Swagger**<br />
+http://localhost:56223/swagger
+
+**Exemplo de utilização do desenho da API**
+
+*BUSCA UM LIVRO PELO ID*
+```
+GET /v1/public/livros/{id}
+```
+
+![alt text](https://i.snag.gy/CRktDS.jpg)
+
  
 ### Abaixo as requisições de teste no Postman
 
