@@ -36,15 +36,8 @@ https://www.getpostman.com/collections/154d63a338d792d9d016
 
 *POSTA UM COMENTÁRIO*
 ```
-POST	/v1/public/livros/{id}/comentario
+POST	/v1/public/livros/{id}/comentario/{valor}
 ```
-Json a ser enviado no corpo da requisição:
-```json
-{
-	"texto": "Comentário Teste"
-}
-```
-
 
 *BUSCA UM LIVRO PELO ID*
 ```
