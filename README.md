@@ -12,6 +12,7 @@ http://localhost:56223
 
 **URL da documentação utilizando o Swagger**<br />
 http://localhost:56223/swagger
+![alt text](https://i.snag.gy/B8A0xo.jpg)
 
 **Exemplo de utilização do desenho da API**
 
