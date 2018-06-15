@@ -11,8 +11,10 @@ O projeto foi desenvolvido utilizando c# juntamente com ASP.NET Core 2.0
 
 ## Informações adicionais do projeto
 
-**URL configurada para o projeto**<br />
-http://localhost:56223
+**URL configurada para o projeto - Ambiente de Desenvolvimento**<br />
+http://localhost:56223</br></br>
+**URL configurada para o projeto - Ambiente de Produção**</br>
+http://livrariaapibackend.azurewebsites.net
 
 **URL da documentação utilizando o Swagger**<br />
 http://localhost:56223/swagger
