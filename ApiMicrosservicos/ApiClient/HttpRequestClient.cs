@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Livraria.Api.ApiHttpClient
+namespace Livraria.Api.ApiClient
 {
     public class HttpRequestClient : IDisposable
     {
@@ -52,7 +52,7 @@ namespace Livraria.Api.ApiHttpClient
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Algo deu errado ex");
+                    throw new Exception("Conexão não pode ser estabelecida");
                 }
 
                 if (response.IsSuccessStatusCode)
@@ -61,7 +61,7 @@ namespace Livraria.Api.ApiHttpClient
                 }
                 else
                 {
-                    throw new Exception("Algo deu errado else");
+                    throw new Exception("Algo deu errado");
                 }
             }
         }

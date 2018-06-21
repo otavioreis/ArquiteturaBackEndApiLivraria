@@ -53,7 +53,7 @@ namespace Livraria.Api
                 c.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
-                    Title = "Livraria API",
+                    Title = "API de Livraria",
                     Description = "Um exemplo de endpoints de uma API de uma loja de livraria construída com ASP.NET Core Web API",
                     Contact = new Contact
                     {
@@ -111,7 +111,7 @@ namespace Livraria.Api
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Livraria API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API de Livraria V1");
             });
 
             app.UseAuditoriaMiddleware();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
@@ -7,10 +8,13 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Livraria.Api.ApiClient;
 using Livraria.Api.ObjectModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
+using Newtonsoft.Json;
 
 namespace Livraria.Api.Middleware
 {
@@ -27,6 +31,10 @@ namespace Livraria.Api.Middleware
 
         public async Task Invoke(HttpContext context)
         {
+            var apiKey = ((FrameRequestHeaders)context.Request.Headers).HeaderAuthorization;
+            var apiHttpClient = new ApiHttpClient(apiKey, "http://localhost:61000/", _httpClient);
+
+
             var userIsAuthenticated = context.User.Identity.IsAuthenticated;
             var req = context.Request;
             string bodyContent;
@@ -51,12 +59,24 @@ namespace Livraria.Api.Middleware
                 usuarioLogin = new UsuarioLogin
                 {
                     Nome = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
-                    Email = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value,
-                    AuthTime = Convert.ToDateTime(context.User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.AuthTime)?.Value)
+                    Email = context.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value,
+                    AuthTime = Convert.ToDateTime(context.User.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.AuthTime)?.Value, CultureInfo.InvariantCulture)
                 };
             }
 
-            var paginaRequisitada = context.Request.Path;
+            var caminhoRequest = context.Request.Path;
+
+
+            var registroAuditoria = new RegistroAuditoria
+            {
+                IsAuthenticated = userIsAuthenticated,
+                Usuario = usuarioLogin,
+                BodyContent = bodyContent,
+                CaminhoRequest = caminhoRequest,
+                QueryString = queryString
+            };
+
+            var resposta = await apiHttpClient.HttpClient.PostAsync("v1/private/auditoria", JsonConvert.SerializeObject(registroAuditoria));
 
             await _next.Invoke(context);
 

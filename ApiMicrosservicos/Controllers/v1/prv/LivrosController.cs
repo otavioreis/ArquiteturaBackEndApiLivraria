@@ -7,9 +7,11 @@ using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Examples;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Livraria.Api.Controllers.v1.prv
 {
+    [Authorize]
     [Route("v1/private/[controller]")]
     public partial class LivrosController : Controller
     {
