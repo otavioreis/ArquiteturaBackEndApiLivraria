@@ -9,10 +9,15 @@ using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.Examples;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Livraria.Api.Controllers.v1.pbl
 {
+    [Authorize]
     [Route("v1/public/[controller]")]
     public partial class LivrosController : Controller
     {
@@ -77,6 +82,7 @@ namespace Livraria.Api.Controllers.v1.pbl
         [HttpGet]
         public async Task<IActionResult> GetLivrosPorAutor(string valor)
         {
+            
             var livros = await _livrariaRespository.GetLivrosPorFiltroAsync(l => l.Autor.ToLower().Contains(valor.ToLower()));
             return Ok(livros);
         }
@@ -91,6 +97,7 @@ namespace Livraria.Api.Controllers.v1.pbl
         [HttpGet]
         public async Task<IActionResult> GetLivrosPorIsbn(string valor)
         {
+            
             var livros = await _livrariaRespository.GetLivrosPorFiltroAsync(l => l.Isbn.ToLower().Contains(valor.ToLower()));
             return Ok(livros);
         }

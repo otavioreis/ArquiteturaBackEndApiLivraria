@@ -10,8 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\v1\pbl\Interface\" />
-    <Folder Include="wwwroot\" />
+    <Compile Remove="Controllers\v1\pbl\Interface\**" />
+    <Compile Remove="wwwroot\**" />
+    <Content Remove="Controllers\v1\pbl\Interface\**" />
+    <Content Remove="wwwroot\**" />
+    <EmbeddedResource Remove="Controllers\v1\pbl\Interface\**" />
+    <EmbeddedResource Remove="wwwroot\**" />
+    <None Remove="Controllers\v1\pbl\Interface\**" />
+    <None Remove="wwwroot\**" />
   </ItemGroup>
 
   <ItemGroup>

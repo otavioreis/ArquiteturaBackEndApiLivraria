@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Livraria.Api.Middleware;
 using Livraria.Api.Repository;
 using Livraria.Api.Repository.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Examples;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -27,6 +31,22 @@ namespace Livraria.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
+
+
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -44,12 +64,26 @@ namespace Livraria.Api
                     License = new License
                     {
                         Name = "Licença MIT",
-                        Url = "https://raw.githubusercontent.com/otavioreis/ArquiteturaBackEndAula02Exercicio2/master/LICENSE"
+                        Url = "https://raw.githubusercontent.com/otavioreis/ArquiteturaBackEndApiLivraria/master/LICENSE"
                     }
                 });
                 c.IncludeXmlComments(GetXmlCommentsPath());
                 c.OperationFilter<ExamplesOperationFilter>(); // [SwaggerRequestExample] & [SwaggerResponseExample]
                 c.OperationFilter<DescriptionOperationFilter>(); // [Description] on Response properties
+
+                var security = new Dictionary<string, IEnumerable<string>>
+                {
+                    {"Bearer", new string[] { }},
+                };
+
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    Description = "Autorização utilizando JWT header usando o esquema Bearer. Examplo: \"Authorization: Bearer {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+                c.AddSecurityRequirement(security);
             });
 
             services.AddMvc();
@@ -71,6 +105,8 @@ namespace Livraria.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
@@ -78,6 +114,7 @@ namespace Livraria.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Livraria API V1");
             });
 
+            app.UseAuditoriaMiddleware();
             app.UseSession();
             app.UseMvc();
         }
