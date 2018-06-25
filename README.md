@@ -13,12 +13,13 @@ O projeto foi desenvolvido utilizando c# juntamente com ASP.NET Core 2.0
 
 **URL configurada para o projeto - Ambiente de Desenvolvimento**<br />
 http://localhost:56223</br></br>
-**URL configurada para o projeto - Ambiente de Produção**</br>
-http://livrariaapibackend.azurewebsites.net
 
 **URL da documentação utilizando o Swagger**<br />
 http://localhost:56223/swagger
-![alt text](https://i.snag.gy/B8A0xo.jpg)
+![alt text](https://i.snag.gy/j5okRb.jpg)
+
+**AUTENTICAÇÃO**<br />
+Atenção, para a utilização desta API, é necessário gerar o token anteriormente utilizando o Microsserviço [ArquiteturaBackEndApiAutenticacao](https://github.com/otavioreis/ArquiteturaBackEndApiAutenticacao) e, então no Swagger, utilizar o botão Authorize preenchendo com o valor "Bearer ApiToken", sendo a ApiToken recebida na autenticação da ArquiteturaBackEndApiAutenticacao;
 
 **Exemplo de utilização do desenho da API**
 
@@ -213,7 +214,7 @@ Json de resposta com todos os itens do carrinho após a remoção:
 
 *CRIA UM PEDIDO NOVO*
 ```
-POST	/v1/public/pedido/{session_id}
+POST	/v1/public/pedido/{session_id}/{numero_cartao}
 ```
 *RETORNA O PEDIDO COM TODOS SEUS ATRIBUTOS, INCLUSIVE O STATUS*
 ```
