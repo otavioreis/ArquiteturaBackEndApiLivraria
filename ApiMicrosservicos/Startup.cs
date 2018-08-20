@@ -94,7 +94,7 @@ namespace Livraria.Api
 
         protected static string GetXmlCommentsPath()
         {
-            return System.String.Format(@"{0}\Swagger.xml", System.AppDomain.CurrentDomain.BaseDirectory);
+            return System.String.Format(@"{0}/Swagger.xml", System.AppDomain.CurrentDomain.BaseDirectory);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

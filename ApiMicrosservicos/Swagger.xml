@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Livraria.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Livraria.Api.Controllers.v1.pbl.LivrosController.Get">
+            <summary>
+            Lista todos os livros da livraria
+            </summary>
+        </member>
+        <member name="M:Livraria.Api.Controllers.v1.pbl.LivrosController.Get(System.Guid)">
+            <summary>
+            Busca um livro da livraria pelo seu Guid
+            </summary>
+            <param name="id">Guid do Livro</param>
+            <response code="400">Bad Request</response>
+        </member>
+        <member name="M:Livraria.Api.Controllers.v1.pbl.LivrosController.PostComentario(System.Guid,System.String)">
+            <summary>
+            Adiciona um comentário a um livro
+            </summary>
+            <param name="id">Guid do Livro</param>
+            <param name="valor">comentário que deverá ser enviado</param>
+            <response code="400">Bad Request</response>
+            <response code="200">String informando o comentário recebido</response>
+        </member>
+        <member name="M:Livraria.Api.Controllers.v1.pbl.LivrosController.GetLivrosPorAutor(System.String)">
+            <summary>
+            Busca um livro da livraria pelo seu Autor
+            </summary>
+            <param name="valor">String com o nome do autor</param>
+            <response code="400">Bad Request</response>
+        </member>
+        <member name="M:Livraria.Api.Controllers.v1.pbl.LivrosController.GetLivrosPorIsbn(System.String)">
+            <summary>
+            Busca um livro da livraria pelo seu Isbn
+            </summary>
+            <param name="valor">String com o nome do Isbn do livro</param>
+            <response code="400">Bad Request</response>
+        </member>
+        <member name="M:Livraria.Api.Controllers.v1.pbl.LivrosController.GetLivrosPorNome(System.String)">
+            <summary>
+            Busca um livro da livraria pelo nome do Livro
+            </summary>
+            <param name="valor">String com o nome do livro</param>
+            <response code="400">Bad Request</response>
+        </member>
+        <member name="M:Livraria.Api.Controllers.v1.pbl.LivrosController.GetItensCarrinho(System.String)">
+            <summary>
+            Busca os itens de um carrinho dada uma sessionId
+            </summary>
+            <param name="sessionId">String a sessionId</param>
+            <response code="400">Bad Request</response>
+        </member>
+        <member name="M:Livraria.Api.Controllers.v1.pbl.LivrosController.PostNovoItemCarrinho(Livraria.Api.ObjectModel.ItemCarrinho,System.String)">
+            <summary>
+            Insere um novo item a um carrinho dada uma sessionId
+            </summary>
+            <param name="itemCarrinho">Json com o model ItemCarrinho que deverá ser inserido</param>
+            <param name="sessionId">String a sessionId</param>
+            <response code="400">Bad Request</response>
+        </member>
+        <member name="M:Livraria.Api.Controllers.v1.pbl.LivrosController.DeleteItemCarrinho(System.Guid,System.String)">
+            <summary>
+            Remove os itens de um carrinho dada uma sessionId
+            </summary>
+            <param name="id">Guid do livro a ser removido do carrinho</param>
+            <param name="sessionId">String a sessionId</param>
+            <response code="400">Bad Request</response>
+        </member>
+        <member name="M:Livraria.Api.Controllers.v1.pbl.PedidosController.CriarPedido(System.String,System.String)">
+            <summary>
+            Cria um novo pedido de acordo com os itens de um carrinho de uma sessão
+            </summary>
+            <param name="sessionId">String a sessionId</param>
+            <param name="numeroCartao">String contendo o número do cartão - O cartão válido é 5510 4481 5196 2381</param>
+            <response code="400">Bad Request</response>
+        </member>
+        <member name="M:Livraria.Api.Controllers.v1.pbl.PedidosController.GetDadosPedido(System.Guid)">
+            <summary>
+            Retorna os dados de um pedido de acordo com o seu id
+            </summary>
+            <param name="idPedido">Guid do id do Pedido</param>
+            <response code="400">Bad Request</response>
+        </member>
+        <member name="M:Livraria.Api.Controllers.v1.prv.LivrosController.Post(Livraria.Api.ObjectModel.LivroLivraria)">
+            <summary>
+            Insere mais um livro na livraria
+            </summary>
+            <param name="livroLivraria">Json que deverá ser informado no corpo da requisição</param>
+            <response code="400">Bad Request</response>
+        </member>
+    </members>
+</doc>
